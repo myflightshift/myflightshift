@@ -104,3 +104,20 @@ html,body{width:100%;max-width:100%;overflow-x:clip}
   #editor .modalactions .danger{margin-right:auto}
 }
 @media(max-width:350px){#editor #flightForm{padding-left:12px;padding-right:12px}#editor .modalhead h2{font-size:19px!important}}
+
+/* v2.5: consistent mobile grid; no overflow or half-width textarea */
+#editor .formgrid{min-width:0;column-gap:12px;row-gap:14px}
+#editor .formgrid>label.wide{grid-column:1/-1}
+#editor .formgrid textarea{display:block;width:100%;min-width:0;max-width:100%;resize:vertical}
+#editor .formgrid input[type="date"],#editor .formgrid input[type="time"]{min-width:0;max-width:100%;width:100%}
+@media(max-width:640px){
+  #editor .formgrid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:13px}
+  #editor .formgrid>label{grid-column:1/-1;width:100%;min-width:0;max-width:100%}
+  #editor .formgrid>label.time-field{grid-column:span 1;min-width:0}
+  #editor .formgrid>label.wide{grid-column:1/-1}
+  #editor .formgrid input,#editor .formgrid select,#editor .formgrid textarea{width:100%;max-width:100%;min-width:0}
+  #editor .formgrid input[type="date"]{height:44px;min-height:44px}
+  #editor .formgrid textarea{height:80px;min-height:80px}
+  #editor .modalactions{width:100%}
+}
+@media(max-width:380px){#editor .formgrid{column-gap:8px}}

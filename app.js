@@ -1,7 +1,7 @@
 'use strict';
 const KEY='flightdesk-flights-v1',THEME='myflightshift-theme',RETENTION_KEY='myflightshift-retention-v1';
 const $=id=>document.getElementById(id);
-const fields=['datum','flug','ziel','start','ende','std','gte','counter','gate','ac','pax','agenten','bemerkung','airlineCode'];
+const fields=['datum','flug','ziel','start','ende','std','gte','counter','gate','ac','pax','agenten','bemerkung'];
 const airline={FR:'Ryanair',QR:'Qatar Airways',CI:'China Airlines',SK:'SAS',EW:'Eurowings',LS:'Jet2.com',G9:'Air Arabia',OS:'Austrian Airlines',LH:'Lufthansa',LX:'SWISS',W6:'Wizz Air',U2:'easyJet',TK:'Turkish Airlines',EK:'Emirates',BA:'British Airways',KL:'KLM',MS:'Egyptair',AF:'Air France',IB:'Iberia',LO:'LOT Polish Airlines',A3:'Aegean Airlines',JU:'Air Serbia',OU:'Croatia Airlines',PC:'Pegasus Airlines',XQ:'SunExpress',DE:'Condor',VY:'Vueling',AY:'Finnair',EI:'Aer Lingus',TP:'TAP Air Portugal',ET:'Ethiopian Airlines',EY:'Etihad Airways',SV:'Saudia',UA:'United Airlines',DL:'Delta Air Lines',AA:'American Airlines',AC:'Air Canada',SQ:'Singapore Airlines',CX:'Cathay Pacific',AI:'Air India','6E':'IndiGo',FZ:'flydubai','5W':'Wizz Air Abu Dhabi','D8':'Norwegian Air Sweden',DY:'Norwegian',BT:'airBaltic',RO:'TAROM',FB:'Bulgaria Air',KM:'KM Malta Airlines',AT:'Royal Air Maroc',TU:'Tunisair',BJ:'Nouvelair',TO:'Transavia France',HV:'Transavia',SN:'Brussels Airlines','4Y':'Discover Airlines',EN:'Air Dolomiti','B6':'JetBlue',QF:'Qantas',NZ:'Air New Zealand'};
 Object.assign(airline,{"4M":"Mavi Gök Airlines","A2":"Animawings","A9":"Georgian Airways","BR":"EVA Air","HU":"Hainan Airlines","J2":"Azerbaijan Airlines","LY":"EL AL","MU":"China Eastern Airlines","OV":"SalamAir","PE":"People’s","RB":"Syrian Airlines","RJ":"Royal Jordanian","SM":"Air Cairo","V7":"Volotea","XK":"Air Corsica","XX":"Charterflug"});
 let flights=[],editing=null,day=localDay(new Date()),installPrompt=null,filterText='';
@@ -10,7 +10,7 @@ function dateAt(d,t){if(!d||!/^\d{2}:\d{2}$/.test(t||''))return null;let x=new D
 function status(f,now=new Date()){const s=dateAt(f.datum,f.start),e=dateAt(f.datum,f.ende);if(!s)return 'Folgt';if(e&&e<s)e.setDate(e.getDate()+1);if(e&&now>=e)return 'Beendet';return now>=s?'Aktuell':'Folgt'}
 function code(f){return (String(f||'').trim().toUpperCase().match(/^([A-Z0-9]{2})[\s-]*(?=\d)/)||[])[1]||'✈'}
 const localLogos=Object.freeze({"4M":"webp","A2":"webp","A9":"webp","AY":"webp","BR":"webp","BT":"webp","CI":"webp","DE":"webp","DY":"webp","EW":"webp","FR":"png","G9":"webp","HU":"webp","J2":"webp","JU":"webp","KM":"webp","LO":"webp","LS":"webp","LY":"webp","MU":"png","OS":"webp","OV":"webp","PE":"webp","QR":"webp","RB":"webp","RJ":"webp","SK":"webp","SM":"webp","SV":"webp","TU":"webp","U2":"webp","V7":"webp","XK":"webp","XX":"webp"});
-function flightAirlineCode(f){return (f.airlineCode&&airline[f.airlineCode])?f.airlineCode:code(f.flug)}
+function flightAirlineCode(f){return code(f.flug)}
 function airlineLogo(c){const name=airline[c]||'Unbekannte Airline';return localLogos[c]?`<img src="./airline-logos/${c}.${localLogos[c]}" alt="${escape(name)} Logo" loading="lazy" decoding="async">`:`<span class="logo-fallback" aria-label="${escape(name)}">${escape(c)}</span>`}
 const counterSelect=$('counterSelect');
 for(const [label,start,end] of [['Terminal 1A',111,132],['Terminal 1',151,161],['Terminal 1 · 162–168',162,168],['Terminal 1',169,196],['Terminal 3 · Insel 1–4',301,378],['Terminal 3 · Insel 5',386,399]]){const group=document.createElement('optgroup');group.label=label;for(let n=start;n<=end;n++){const option=document.createElement('option');option.value=String(n);option.textContent=label+' · '+n;group.append(option)}counterSelect.append(group)}
@@ -24,10 +24,14 @@ for(const [groupName,entries] of extraCounterGroups){
   for(const entry of entries){const option=document.createElement('option');option.value=entry;option.textContent=entry;group.append(option)}
   counterSelect.append(group);
 }
-function updateAirlinePreview(){const input=document.querySelector('#flightForm [name="flug"]');const automatic=code(input.value);const chosen=$('airlineCode').value;const c=chosen||automatic;const el=$('airlinePreview');if(!el)return;el.innerHTML=airline[c]?`<span class="preview-logo">${airlineLogo(c)}</span><span><strong>${escape(airline[c])}</strong><small>${chosen?'Manuell ausgewählt':'Automatisch erkannt'} · ${escape(c)}</small></span>`:`<span class="preview-logo">✈</span><span><strong>${input.value.trim()?'Airline nicht erkannt':'Airline wird automatisch erkannt'}</strong><small>${input.value.trim()?'Bitte Flugnummer prüfen oder Airline auswählen':'Zum Beispiel FR 1111 oder OS 123'}</small></span>`}
-const airlineSelect=$('airlineCode');
-for(const c of Object.keys(localLogos).sort((a,b)=>airline[a].localeCompare(airline[b],'de'))){const opt=document.createElement('option');opt.value=c;opt.textContent=`${airline[c]} (${c})`;airlineSelect.append(opt)}
-airlineSelect.addEventListener('change',updateAirlinePreview);
+function updateAirlinePreview(){
+  const input=document.querySelector('#flightForm [name="flug"]');
+  const c=code(input.value),el=$('airlinePreview');
+  if(!el)return;
+  el.innerHTML=airline[c]
+    ?`<span class="preview-logo">${airlineLogo(c)}</span><span><strong>${escape(airline[c])}</strong><small>Automatisch erkannt · ${escape(c)}</small></span>`
+    :`<span class="preview-logo">✈</span><span><strong>${input.value.trim()?'Airline nicht erkannt':'Airline wird automatisch erkannt'}</strong><small>${input.value.trim()?'Bitte Flugnummer prüfen':'Zum Beispiel FR 1111 oder OS 123'}</small></span>`;
+}
 function escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function read(){try{let x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch{return []}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(flights));return true}catch{toast('Speichern fehlgeschlagen: Speicher voll oder gesperrt');return false}}
