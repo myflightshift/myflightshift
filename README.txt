@@ -31,3 +31,5 @@ NEU in 2.1: Optionales Uhrzeitfeld GTE unmittelbar nach STD. GTE wird mit Flüge
 NEU in 2.2: Das optionale Uhrzeitfeld nach STD heißt jetzt „Gate (Uhrzeit)“ statt „GTE“. Das separate Feld „Gate/Position“ bleibt unverändert.
 
 Version 2.3: iPhone-Dialog auf Bildschirmbreite begrenzt, Eingabefelder einspaltig, horizontales Scrollen verhindert; Schriftgroesse 16px; Zoom-Sperre entfernt.
+
+Version 2.4: Mobilansicht „Flug hinzufügen“ als Vollbild-Tab, kompakte Felder, keine horizontale Verschiebung; Start/Ende/STD/Gate-Uhrzeit zweispaltig.
