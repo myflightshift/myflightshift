@@ -1,4 +1,4 @@
-MyFlightShift 1.8 – Installation und Aktualisierung (19.11.2026)
+MyFlightShift 2.2 – Installation und Aktualisierung (19.11.2026)
 
 GitHub Pages (empfohlen):
 1. ZIP auf deinem Computer ENTpacken.
@@ -21,3 +21,11 @@ NEU: App-Icon Vorschlag 2, Website-Logo Vorschlag 3, Counter-Auswahl nach Termin
 DATEN: Die bestehende lokale Speicherung bleibt erhalten (Schlüssel flightdesk-flights-v1). Vor Updates empfiehlt sich ein JSON-Backup. Bestehende Flüge werden beim Update nicht absichtlich gelöscht. Ein Wechsel der Domain (github.io -> myflightshift.at) überträgt lokale Flüge NICHT automatisch; bitte vorher Backup exportieren und auf neuer Domain importieren.
 
 HINWEIS: Bitte vor produktiver Nutzung sämtliche Funktionen auf Mobilgeräten testen. Impressum mit vollständiger ladungsfähiger Anschrift und datenschutzrechtliche Angaben ggf. rechtlich prüfen. Die Markenrechte an fremden Airline-Logos bleiben gesondert zu klären.
+
+NEU in 1.9: Terminal 1 Counter 162–168 als eigene Gruppe „Terminal 1 · 162–168“; Start, Ende und STD verkürzte Labels; Gate/Position; Großschreibung von Buchstaben in Flugnummer, Destination, Gate/Position, Flugzeugtyp und Agent(s) (Zahlen/Sonderzeichen unverändert); mobile Eingabefelder mit mindestens 16px gegen iPhone-Fokuszoom; Zoom-Gesten im Viewport deaktiviert. Hinweis: Deaktivierter manueller Zoom schränkt Barrierefreiheit ein.
+
+NEU in 2.0: Im Auswahlfeld Terminal / Counter zusätzliche Einträge T1, T3, 151-162, 335-338, 111-118, T1A, Charter, Inc, UM, ServiceDesk. Die bisherigen nummerischen Counter bleiben erhalten.
+
+NEU in 2.1: Optionales Uhrzeitfeld GTE unmittelbar nach STD. GTE wird mit Flügen und JSON-Backups gespeichert und auf den Flugkarten angezeigt. Alte Einträge ohne GTE bleiben gültig.
+
+NEU in 2.2: Das optionale Uhrzeitfeld nach STD heißt jetzt „Gate (Uhrzeit)“ statt „GTE“. Das separate Feld „Gate/Position“ bleibt unverändert.

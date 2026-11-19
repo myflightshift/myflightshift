@@ -54,3 +54,7 @@ body:not(.light) .website-brand-logo{mix-blend-mode:normal;background:#fff;borde
 button,input,textarea,select{max-width:100%}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #6AA689;outline-offset:2px}
 @media(max-width:640px){.shell{padding:14px 13px 65px}header{padding-bottom:20px}.website-brand-logo{width:190px;max-height:90px}.formgrid{grid-template-columns:minmax(0,1fr)}.formgrid .wide{grid-column:auto}.intro{align-items:center}.intro h1{font-size:clamp(29px,8vw,39px)}.intro .primary{padding:12px}.flightcard{gap:9px}.flighttop{gap:5px}.spotlight-content{align-items:flex-start}.toolbuttons>*{min-height:44px}.modalactions{flex-wrap:wrap}#flightForm{padding:16px}dialog{max-height:calc(100dvh - 18px)}}
 @media(max-width:360px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.logo{min-width:64px;width:64px}.right strong{font-size:14px}.flightcard{padding:10px}.intro{flex-wrap:wrap}}
+
+/* Mobile text inputs must be at least 16px to avoid automatic focus zoom in iOS Safari. */
+@media (pointer:coarse){input,select,textarea,#flightForm input,#flightForm select,#flightForm textarea,.searchbox input{font-size:16px!important}}
+html{overflow-x:hidden}body{overflow-x:hidden}
