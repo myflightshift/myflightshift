@@ -29,3 +29,5 @@ NEU in 2.0: Im Auswahlfeld Terminal / Counter zusätzliche Einträge T1, T3, 151
 NEU in 2.1: Optionales Uhrzeitfeld GTE unmittelbar nach STD. GTE wird mit Flügen und JSON-Backups gespeichert und auf den Flugkarten angezeigt. Alte Einträge ohne GTE bleiben gültig.
 
 NEU in 2.2: Das optionale Uhrzeitfeld nach STD heißt jetzt „Gate (Uhrzeit)“ statt „GTE“. Das separate Feld „Gate/Position“ bleibt unverändert.
+
+Version 2.3: iPhone-Dialog auf Bildschirmbreite begrenzt, Eingabefelder einspaltig, horizontales Scrollen verhindert; Schriftgroesse 16px; Zoom-Sperre entfernt.

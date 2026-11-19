@@ -58,3 +58,19 @@ button,input,textarea,select{max-width:100%}button:focus-visible,input:focus-vis
 /* Mobile text inputs must be at least 16px to avoid automatic focus zoom in iOS Safari. */
 @media (pointer:coarse){input,select,textarea,#flightForm input,#flightForm select,#flightForm textarea,.searchbox input{font-size:16px!important}}
 html{overflow-x:hidden}body{overflow-x:hidden}
+
+/* v2.3: prevent iPhone dialog from expanding beyond the visual viewport. */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+#editor{box-sizing:border-box;inline-size:min(660px,calc(100vw - 24px));max-inline-size:calc(100vw - 24px);min-inline-size:0;max-block-size:calc(100dvh - 24px);margin:auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+#editor #flightForm{box-sizing:border-box;width:100%;min-width:0;max-width:100%;overflow-x:hidden}
+#editor .modalhead{min-width:0;gap:12px}
+#editor .modalhead>div{min-width:0;overflow-wrap:anywhere}
+#editor .modalhead h2{font-size:clamp(22px,5.8vw,29px);overflow-wrap:anywhere}
+#editor .modalhead .iconbtn{flex-shrink:0}
+#editor .formgrid{grid-template-columns:repeat(2,minmax(0,1fr));min-width:0;max-width:100%}
+#editor .formgrid>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#editor .formgrid input,#editor .formgrid select,#editor .formgrid textarea{box-sizing:border-box;min-width:0;max-width:100%;width:100%;font-size:16px}
+#editor .airline-preview{min-width:0;max-width:100%;overflow:hidden}
+#editor .airline-preview *{min-width:0;overflow-wrap:anywhere}
+#editor .modalactions{min-width:0;flex-wrap:wrap}
+@media(max-width:640px){#editor{inline-size:calc(100vw - 20px);max-inline-size:calc(100vw - 20px);max-block-size:calc(100dvh - 20px)}#editor #flightForm{padding:18px 15px}#editor .formgrid{grid-template-columns:minmax(0,1fr)}#editor .formgrid .wide{grid-column:auto}}
